@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    tools:context=".ui.screen.home.HomeFragment">
+    tools:context=".ui.screen.input.InputFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,33 +26,59 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="1"
-                android:text="@string/home"
+                android:text="@string/input"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_18sdp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="@dimen/_10sdp"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:gravity="top"
+                    android:hint="@string/input_hint"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/import_card"
+                android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/poppins_medium"
                 android:padding="@dimen/_6sdp"
-                android:text="@string/input"
+                android:text="@string/next"
                 android:textSize="@dimen/_14sdp"
                 app:cornerRadius="@dimen/_10sdp"
                 app:icon="@drawable/ic_arrow_forward"
                 app:iconGravity="textEnd"
                 app:iconSize="@dimen/_15sdp" />
-        </LinearLayout>
-    </LinearLayout>
 
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

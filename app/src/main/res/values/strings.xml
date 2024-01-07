@@ -5,4 +5,9 @@
     <string name="home">Home</string>
     <string name="bookmark">Bookmark</string>
     <string name="settings">Settings</string>
+    <string name="input">Input Dictionaries</string>
+    <string name="input_hint">Singular/Birlik\nPlural/Ko\'plik</string>
+    <string name="next">Next</string>
+    <string name="input_details">Input Details</string>
+    <string name="previous">Previous</string>
 </resources>

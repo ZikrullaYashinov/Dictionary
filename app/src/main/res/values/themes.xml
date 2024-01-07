@@ -2,6 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Dictionary" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
