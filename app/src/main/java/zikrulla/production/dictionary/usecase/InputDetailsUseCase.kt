@@ -1,14 +1,15 @@
-package zikrulla.production.dictionary.viewmodel
+package zikrulla.production.dictionary.usecase
 
 import kotlinx.coroutines.flow.Flow
 import zikrulla.production.dictionary.data.local.entity.DictionaryEntity
 import zikrulla.production.dictionary.data.local.entity.FolderEntity
 
-interface InputDetailsViewModel {
+interface InputDetailsUseCase {
 
-    fun insertDictionaryList(id: Long, list: List<DictionaryEntity>)
+    suspend fun insertDictionaryList(list: List<DictionaryEntity>)
 
-    fun insertFolder(folderEntity: FolderEntity)
+    suspend fun insertFolder(folderEntity: FolderEntity): Long
 
     fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>>
+
 }

@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_bookmark"
         android:title="@string/bookmark" />
     <item
+        android:id="@+id/dictionaryFragment"
+        android:icon="@drawable/ic_folder"
+        android:title="@string/dictionaries" />
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings" />

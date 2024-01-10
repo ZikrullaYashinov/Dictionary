@@ -6,30 +6,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import zikrulla.production.dictionary.R
+import zikrulla.production.dictionary.data.local.entity.FolderEntity
 import zikrulla.production.dictionary.data.model.Dictionary
 import zikrulla.production.dictionary.data.model.DictionaryList
 import zikrulla.production.dictionary.databinding.FragmentInputDetailsBinding
-import zikrulla.production.dictionary.ui.adapter.DictionaryAdapter
+import zikrulla.production.dictionary.ui.adapter.DictionarySelectorAdapter
 import zikrulla.production.dictionary.utils.Constants
 import zikrulla.production.dictionary.utils.Constants.TAG
+import zikrulla.production.dictionary.viewmodel.InputDetailsViewModel
+import zikrulla.production.dictionary.viewmodel.impl.InputDetailsViewModelImpl
 
+@AndroidEntryPoint
 class InputDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            dictionaryList = (requireArguments().getSerializable(Constants.DICTIONARY_LIST) as DictionaryList).list
+            folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME)
+            dictionaryList =
+                (requireArguments().getSerializable(Constants.DICTIONARY_LIST) as DictionaryList).list
             Log.d(TAG, "onCreate: ${dictionaryList.size}")
         }
     }
 
     private lateinit var binding: FragmentInputDetailsBinding
     private lateinit var dictionaryList: List<Dictionary>
+    private var folderName: String? = null
+    private val viewModel by viewModels<InputDetailsViewModelImpl>()
     private val dictionaryAdapter by lazy {
-        DictionaryAdapter(dictionaryList)
+        DictionarySelectorAdapter(dictionaryList)
     }
 
     override fun onCreateView(
@@ -43,6 +57,7 @@ class InputDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         load()
         click()
+        observe()
     }
 
     private fun load() {
@@ -61,11 +76,25 @@ class InputDetailsFragment : Fragment() {
                 findNavController().popBackStack()
             }
             next.setOnClickListener {
-                findNavController().popBackStack(R.id.homeFragment, false)
-//                TODO("database add data")
+                viewModel.insertFolder(FolderEntity(0, folderName ?: "", 0, true))
             }
         }
 
+    }
+
+    private fun observe() {
+        viewModel.stateFolderId.onEach {
+            if (it != -1L) {
+                val list = dictionaryList.map { it.toDictionaryEntity() }
+                viewModel.insertDictionaryList(it, list)
+                finish()
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun finish() {
+        findNavController().popBackStack(R.id.homeFragment, false)
+        activity?.findViewById<View>(R.id.bottom_navigation_view)?.isVisible = true
     }
 
     companion object {

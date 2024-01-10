@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import zikrulla.production.dictionary.R
 import zikrulla.production.dictionary.data.model.Dictionary
-import zikrulla.production.dictionary.databinding.ItemDictionaryBinding
+import zikrulla.production.dictionary.databinding.ItemDictionarySelectorBinding
 
-class DictionaryAdapter(private var list: List<Dictionary>) : Adapter<DictionaryAdapter.Vh>() {
+class DictionarySelectorAdapter(private var list: List<Dictionary>) : Adapter<DictionarySelectorAdapter.Vh>() {
 
-    inner class Vh(private val binding: ItemDictionaryBinding) : ViewHolder(binding.root) {
+    inner class Vh(private val binding: ItemDictionarySelectorBinding) : ViewHolder(binding.root) {
         fun bind(dictionary: Dictionary, position: Int) {
             binding.apply {
                 key.text = dictionary.key
@@ -25,7 +25,7 @@ class DictionaryAdapter(private var list: List<Dictionary>) : Adapter<Dictionary
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
-        return Vh(ItemDictionaryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return Vh(ItemDictionarySelectorBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {

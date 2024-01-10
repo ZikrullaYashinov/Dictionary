@@ -10,4 +10,9 @@
     <string name="next">Next</string>
     <string name="input_details">Input Details</string>
     <string name="previous">Previous</string>
+    <string name="dictionaries">Dictionaries</string>
+    <string name="my_dic">Dictionaries (SET)</string>
+    <string name="folder_name">Folder name</string>
+    <string name="dic_import">Dictionaries import</string>
+    <string name="cancel">Cancel</string>
 </resources>

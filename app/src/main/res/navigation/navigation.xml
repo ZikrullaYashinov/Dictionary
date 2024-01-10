@@ -35,4 +35,14 @@
         android:name="zikrulla.production.dictionary.ui.screen.input_details.InputDetailsFragment"
         android:label="fragment_input_details"
         tools:layout="@layout/fragment_input_details" />
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="zikrulla.production.dictionary.ui.screen.dictionary.DictionaryFragment"
+        android:label="fragment_dictionary"
+        tools:layout="@layout/fragment_dictionary" />
+    <fragment
+        android:id="@+id/newItemFragment"
+        android:name="zikrulla.production.dictionary.ui.screen.new_item.NewItemFragment"
+        android:label="fragment_new_item"
+        tools:layout="@layout/fragment_new_item" />
 </navigation>

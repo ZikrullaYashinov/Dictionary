@@ -18,10 +18,14 @@ import zikrulla.production.dictionary.utils.Constants
 class InputFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {}
+        arguments?.let {
+            folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME).toString()
+
+        }
     }
 
     private lateinit var binding: FragmentInputBinding
+    private var folderName = "new folder"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -52,6 +56,7 @@ class InputFragment : Fragment() {
                 }
                 findNavController().navigate(R.id.inputDetailsFragment, Bundle().apply {
                     this.putSerializable(Constants.DICTIONARY_LIST, DictionaryList(dictionaries))
+                    this.putString(Constants.ARG_FOLDER_NAME, folderName)
                 })
             }
         }
