@@ -32,15 +32,16 @@ class InputDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME)
+            baseId = requireArguments().getLong(Constants.ARG_BASE_ID)
             dictionaryList =
                 (requireArguments().getSerializable(Constants.DICTIONARY_LIST) as DictionaryList).list
-            Log.d(TAG, "onCreate: ${dictionaryList.size}")
         }
     }
 
     private lateinit var binding: FragmentInputDetailsBinding
     private lateinit var dictionaryList: List<Dictionary>
     private var folderName: String? = null
+    private var baseId: Long = 0
     private val viewModel by viewModels<InputDetailsViewModelImpl>()
     private val dictionaryAdapter by lazy {
         DictionarySelectorAdapter(dictionaryList)
@@ -76,7 +77,7 @@ class InputDetailsFragment : Fragment() {
                 findNavController().popBackStack()
             }
             next.setOnClickListener {
-                viewModel.insertFolder(FolderEntity(0, folderName ?: "", 0, true))
+                viewModel.insertFolder(FolderEntity(0, folderName ?: "", baseId, true))
             }
         }
 
@@ -93,7 +94,7 @@ class InputDetailsFragment : Fragment() {
     }
 
     private fun finish() {
-        findNavController().popBackStack(R.id.homeFragment, false)
+        findNavController().popBackStack(R.id.dictionaryFragment, false)
         activity?.findViewById<View>(R.id.bottom_navigation_view)?.isVisible = true
     }
 

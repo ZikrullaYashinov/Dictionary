@@ -11,12 +11,19 @@ import zikrulla.production.dictionary.data.model.Dictionary
 import zikrulla.production.dictionary.databinding.ItemDictionarySelectorBinding
 import zikrulla.production.dictionary.databinding.ItemFolderBinding
 
-class FolderAdapter(private var list: List<FolderEntity>) : Adapter<FolderAdapter.Vh>() {
+class FolderAdapter(
+    private var list: List<FolderEntity>,
+    private val onClick: (FolderEntity) -> Unit,
+    private val onClickSetting: (FolderEntity) -> Unit
+) : Adapter<FolderAdapter.Vh>() {
 
     inner class Vh(private val binding: ItemFolderBinding) : ViewHolder(binding.root) {
         fun bind(folderEntity: FolderEntity, position: Int) {
             binding.apply {
                 folderName.text = folderEntity.name
+                settings.setOnClickListener {
+                    onClickSetting.invoke(folderEntity)
+                }
             }
         }
     }
@@ -36,7 +43,11 @@ class FolderAdapter(private var list: List<FolderEntity>) : Adapter<FolderAdapte
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.bind(list[position], position)
+        val folderEntity = list[position]
+        holder.bind(folderEntity, position)
+        holder.itemView.setOnClickListener {
+            onClick.invoke(folderEntity)
+        }
     }
 
 }

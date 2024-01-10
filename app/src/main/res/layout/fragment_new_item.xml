@@ -1,89 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray"
     tools:context=".ui.screen.new_item.NewItemFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints=""
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="top"
-                android:hint="@string/folder_name"
-                android:inputType="textShortMessage" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_import"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:backgroundTint="@color/colorAccent"
-            android:fontFamily="@font/poppins_medium"
-            android:padding="@dimen/_6sdp"
-            android:text="@string/dic_import"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_14sdp"
-            app:cornerRadius="@dimen/_10sdp"
-            app:icon="@drawable/ic_downward"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/_20sdp"
-            app:iconTint="@color/gray" />
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal">
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel"
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_settings"
+                android:visibility="invisible"
+                app:tint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/screen_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/gray_2"
                 android:fontFamily="@font/poppins_medium"
-                android:padding="@dimen/_6sdp"
-                android:text="@string/cancel"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                app:cornerRadius="@dimen/_10sdp" />
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_12sdp"
+                android:text="@string/new_folder"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_18sdp" />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/add_folder"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_folder_add"
+                app:tint="@color/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="top"
+                    android:hint="@string/folder_name"
+                    android:inputType="textShortMessage" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/next"
-                android:layout_width="0dp"
+                android:id="@+id/btn_import"
+                android:visibility="gone"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:backgroundTint="@color/colorAccent"
                 android:fontFamily="@font/poppins_medium"
                 android:padding="@dimen/_6sdp"
-                android:text="@string/next"
+                android:text="@string/dic_import"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp"
                 app:cornerRadius="@dimen/_10sdp"
-                app:icon="@drawable/ic_arrow_forward"
-                app:iconGravity="textEnd"
-                app:iconSize="@dimen/_15sdp"
+                app:icon="@drawable/ic_downward"
+                app:iconGravity="textStart"
+                app:iconSize="@dimen/_20sdp"
                 app:iconTint="@color/gray" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/gray_2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    app:cornerRadius="@dimen/_10sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/next"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/next"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_14sdp"
+                    app:cornerRadius="@dimen/_10sdp"
+                    app:icon="@drawable/ic_arrow_forward"
+                    app:iconGravity="textEnd"
+                    app:iconSize="@dimen/_15sdp"
+                    app:iconTint="@color/gray" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

@@ -20,12 +20,14 @@ class InputFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME).toString()
+            baseId = requireArguments().getLong(Constants.ARG_BASE_ID)
 
         }
     }
 
     private lateinit var binding: FragmentInputBinding
     private var folderName = "new folder"
+    private var baseId = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -57,6 +59,7 @@ class InputFragment : Fragment() {
                 findNavController().navigate(R.id.inputDetailsFragment, Bundle().apply {
                     this.putSerializable(Constants.DICTIONARY_LIST, DictionaryList(dictionaries))
                     this.putString(Constants.ARG_FOLDER_NAME, folderName)
+                    this.putLong(Constants.ARG_BASE_ID, baseId)
                 })
             }
         }

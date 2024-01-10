@@ -15,4 +15,5 @@
     <string name="folder_name">Folder name</string>
     <string name="dic_import">Dictionaries import</string>
     <string name="cancel">Cancel</string>
+    <string name="new_folder">New folder</string>
 </resources>
