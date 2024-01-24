@@ -1,15 +1,12 @@
 package zikrulla.production.dictionary.viewmodel
 
-import kotlinx.coroutines.flow.Flow
 import zikrulla.production.dictionary.data.local.entity.DictionaryEntity
 import zikrulla.production.dictionary.data.local.entity.FolderEntity
 
-interface InputDetailsViewModel {
-
-    fun insertDictionaryList(id: Long, list: List<DictionaryEntity>)
+interface NewItemViewModel {
 
     fun insertFolder(folderEntity: FolderEntity)
     fun updateFolder(folderEntity: FolderEntity)
-
-    fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>>
+    fun deleteFolder(folderEntity: FolderEntity)
+    fun insertDictionary(dictionaryEntity: DictionaryEntity)
 }

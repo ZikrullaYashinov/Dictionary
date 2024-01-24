@@ -31,8 +31,8 @@ class InputDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME)
-            baseId = requireArguments().getLong(Constants.ARG_BASE_ID)
+            folder = requireArguments().getSerializable(Constants.ARG_FOLDER) as FolderEntity
+            isMakeFolder = folder?.isFolderEnd == true
             dictionaryList =
                 (requireArguments().getSerializable(Constants.DICTIONARY_LIST) as DictionaryList).list
         }
@@ -40,8 +40,8 @@ class InputDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentInputDetailsBinding
     private lateinit var dictionaryList: List<Dictionary>
-    private var folderName: String? = null
-    private var baseId: Long = 0
+    private var folder: FolderEntity? = null
+    private var isMakeFolder = true
     private val viewModel by viewModels<InputDetailsViewModelImpl>()
     private val dictionaryAdapter by lazy {
         DictionarySelectorAdapter(dictionaryList)
@@ -77,7 +77,14 @@ class InputDetailsFragment : Fragment() {
                 findNavController().popBackStack()
             }
             next.setOnClickListener {
-                viewModel.insertFolder(FolderEntity(0, folderName ?: "", baseId, true))
+                folder?.let {
+                    if (isMakeFolder)
+                        viewModel.insertFolder(it.copy(isFolderEnd = true))
+                    else {
+                        viewModel.updateFolder(it.copy(isFolderEnd = true))
+                        insertDictionaryList(it.id)
+                    }
+                }
             }
         }
 
@@ -86,11 +93,16 @@ class InputDetailsFragment : Fragment() {
     private fun observe() {
         viewModel.stateFolderId.onEach {
             if (it != -1L) {
-                val list = dictionaryList.map { it.toDictionaryEntity() }
-                viewModel.insertDictionaryList(it, list)
-                finish()
+                if (isMakeFolder)
+                    insertDictionaryList(it)
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun insertDictionaryList(id: Long) {
+        val list = dictionaryList.map { it.toDictionaryEntity() }
+        viewModel.insertDictionaryList(id, list)
+        finish()
     }
 
     private fun finish() {

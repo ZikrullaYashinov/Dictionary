@@ -16,4 +16,18 @@
     <string name="dic_import">Dictionaries import</string>
     <string name="cancel">Cancel</string>
     <string name="new_folder">New folder</string>
+    <string name="new_dictionary">New dictionary</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="key_desc">Key description</string>
+    <string name="value_desc">Value description</string>
+    <string name="key_value_empty">Key or value is empty</string>
+    <string name="is_folder">Is folder</string>
+    <string name="save">Save</string>
+    <string name="run">Run</string>
+    <string name="run_settings">Run Settings</string>
+    <string name="go">Go</string>
+    <string name="test">Test</string>
+    <string name="card">Card</string>
+    <string name="question">Question</string>
 </resources>

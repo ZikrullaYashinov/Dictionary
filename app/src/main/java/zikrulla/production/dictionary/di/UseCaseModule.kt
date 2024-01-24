@@ -9,8 +9,10 @@ import zikrulla.production.dictionary.repository.DictionariesRepository
 import zikrulla.production.dictionary.repository.impl.DictionariesRepositoryImpl
 import zikrulla.production.dictionary.usecase.DictionaryUseCase
 import zikrulla.production.dictionary.usecase.InputDetailsUseCase
+import zikrulla.production.dictionary.usecase.NewItemUseCase
 import zikrulla.production.dictionary.usecase.impl.DictionaryUseCaseImpl
 import zikrulla.production.dictionary.usecase.impl.InputDetailsUseCaseImpl
+import zikrulla.production.dictionary.usecase.impl.NewItemUseCaseImpl
 import javax.inject.Singleton
 
 @Module
@@ -22,5 +24,8 @@ interface UseCaseModule {
 
     @Binds
     fun getDictionaryUseCase(dictionaryUseCaseImpl: DictionaryUseCaseImpl): DictionaryUseCase
+
+    @Binds
+    fun getNewItemUseCase(newItemUseCaseImpl: NewItemUseCaseImpl): NewItemUseCase
 
 }

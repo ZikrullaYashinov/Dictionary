@@ -5,29 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import zikrulla.production.dictionary.R
+import zikrulla.production.dictionary.data.local.entity.FolderEntity
 import zikrulla.production.dictionary.data.model.Dictionary
 import zikrulla.production.dictionary.data.model.DictionaryList
 import zikrulla.production.dictionary.databinding.FragmentInputBinding
 import zikrulla.production.dictionary.utils.Constants
 
+@AndroidEntryPoint
 class InputFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             folderName = requireArguments().getString(Constants.ARG_FOLDER_NAME).toString()
             baseId = requireArguments().getLong(Constants.ARG_BASE_ID)
-
+            folderId = requireArguments().getLong(Constants.ARG_FOLDER_ID)
+            isMakeFolder = requireArguments().getBoolean(Constants.ARG_IS_MAKE_FOLDER, true)
         }
     }
 
     private lateinit var binding: FragmentInputBinding
     private var folderName = "new folder"
     private var baseId = 0L
+    private var folderId = 0L
+    private var isMakeFolder = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,11 +62,18 @@ class InputFragment : Fragment() {
                     if (list.size == 2)
                         dictionaries.add(Dictionary(list[0].trim(), list[1].trim()))
                 }
-                findNavController().navigate(R.id.inputDetailsFragment, Bundle().apply {
-                    this.putSerializable(Constants.DICTIONARY_LIST, DictionaryList(dictionaries))
-                    this.putString(Constants.ARG_FOLDER_NAME, folderName)
-                    this.putLong(Constants.ARG_BASE_ID, baseId)
-                })
+                val folderEntity = FolderEntity(
+                    id = folderId,
+                    name = folderName,
+                    baseId = baseId,
+                    isFolderEnd = isMakeFolder
+                )
+                findNavController().navigate(
+                    R.id.inputDetailsFragment, bundleOf(
+                        Constants.DICTIONARY_LIST to DictionaryList(dictionaries),
+                        Constants.ARG_FOLDER to folderEntity,
+                    )
+                )
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

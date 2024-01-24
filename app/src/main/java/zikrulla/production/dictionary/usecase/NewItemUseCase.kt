@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import zikrulla.production.dictionary.data.local.entity.DictionaryEntity
 import zikrulla.production.dictionary.data.local.entity.FolderEntity
 
-interface InputDetailsUseCase {
+interface NewItemUseCase {
 
-    suspend fun insertDictionaryList(list: List<DictionaryEntity>)
-    suspend fun insertFolder(folderEntity: FolderEntity): Long
+    fun getFolders(folderEntity: FolderEntity): Flow<List<FolderEntity>>
+    suspend fun insertFolder(folderEntity: FolderEntity)
     suspend fun updateFolder(folderEntity: FolderEntity)
-    fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>>
-
+    suspend fun deleteFolder(folderEntity: FolderEntity)
+    suspend fun insertDictionary(dictionaryEntity: DictionaryEntity)
 }

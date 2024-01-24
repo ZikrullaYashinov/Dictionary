@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_5sdp"
     android:background="@drawable/bg_gray"
-    android:orientation="horizontal"
     android:gravity="center"
+    android:orientation="horizontal"
     android:padding="@dimen/_10sdp">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:id="@+id/key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/_12sdp"
             tools:text="@string/input" />
@@ -27,6 +29,7 @@
             android:id="@+id/value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             tools:text="@string/input" />
@@ -34,8 +37,8 @@
 
     <ImageView
         android:id="@+id/check"
-        android:src="@drawable/ic_checked"
         android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"/>
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_checked"/>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package zikrulla.production.dictionary.ui.screen.dictionary
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,8 +20,13 @@ import zikrulla.production.dictionary.R
 import zikrulla.production.dictionary.data.local.entity.FolderEntity
 import zikrulla.production.dictionary.data.model.enums.Type
 import zikrulla.production.dictionary.databinding.FragmentDictionaryBinding
+import zikrulla.production.dictionary.ui.adapter.DictionaryAdapter
 import zikrulla.production.dictionary.ui.adapter.FolderAdapter
+import zikrulla.production.dictionary.ui.dialog.folder.FolderDialogFragment
+import zikrulla.production.dictionary.ui.model.BottomSheetModel
+import zikrulla.production.dictionary.ui.model.BottomSheetModelList
 import zikrulla.production.dictionary.utils.Constants
+import zikrulla.production.dictionary.utils.Constants.TAG
 import zikrulla.production.dictionary.viewmodel.impl.DictionaryViewModelImpl
 
 @AndroidEntryPoint
@@ -32,6 +39,7 @@ class DictionaryFragment : Fragment() {
             if (requireArguments().getSerializable(Constants.ARG_FOLDER) != null) {
                 baseFolderEntity =
                     requireArguments().getSerializable(Constants.ARG_FOLDER) as FolderEntity
+                baseId = baseFolderEntity?.id!!
                 visibleBN = false
             }
         }
@@ -42,7 +50,7 @@ class DictionaryFragment : Fragment() {
     private var visibleBN = true
     private var baseFolderEntity: FolderEntity? = null
     private val viewModel by viewModels<DictionaryViewModelImpl>()
-    private val adapter: FolderAdapter by lazy {
+    private val folderAdapter: FolderAdapter by lazy {
         FolderAdapter(
             emptyList(),
             onClick = {
@@ -54,9 +62,41 @@ class DictionaryFragment : Fragment() {
                 )
             },
             onClickSetting = {
+                val run = getString(R.string.run)
+                val setting = getString(R.string.settings)
+                val bottomSheetFragment = FolderDialogFragment().apply {
+                    bundleOf(
+                        Constants.ARG_BOTTOM_SHEET_ARGS to BottomSheetModelList(
+                            listOf(
+                                BottomSheetModel(R.drawable.ic_runner, run) {
+                                    navigate(
+                                        R.id.settingsRunFragment, bundleOf(
+                                            Constants.ARG_FOLDER to it
+                                        )
+                                    )
+                                    this.dismiss()
+                                },
+                                BottomSheetModel(R.drawable.ic_settings, setting) {
+                                    navigate(
+                                        R.id.newItemFragment, bundleOf(
+                                            Constants.ARG_TYPE to Type.EDIT_FOLDER,
+                                            Constants.ARG_OBJECT to it,
+                                        )
+                                    )
+                                    this.dismiss()
+                                },
+                            )
+                        )
+                    ).also { arguments = it }
+                }
+                bottomSheetFragment.show(
+                    requireActivity().supportFragmentManager,
+                    "my_bottom_sheet_tag"
+                )
 
             })
     }
+    private val dictionaryAdapter by lazy { DictionaryAdapter(emptyList()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,28 +115,54 @@ class DictionaryFragment : Fragment() {
     private fun load() {
         activity?.findViewById<View>(R.id.bottom_navigation_view)?.isVisible = visibleBN
         binding.apply {
-            rv.adapter = adapter
             rv.layoutManager = LinearLayoutManager(requireContext())
+            if (baseFolderEntity != null) {
+                if (baseFolderEntity!!.isFolderEnd) {
+                    // dictionaries
+                    rv.adapter = dictionaryAdapter
+                    add.setImageResource(R.drawable.ic_add_circle)
+                } else {
+                    // folders base not null
+                    rv.adapter = folderAdapter
+                    add.setImageResource(R.drawable.ic_folder_add)
+                }
+                screenTitle.text = baseFolderEntity?.name
+            } else {
+                // folders base 0
+                rv.adapter = folderAdapter
+            }
+            back.visibility = if (visibleBN) View.INVISIBLE else View.VISIBLE
         }
     }
 
     private fun click() {
         binding.apply {
-            addFolder.setOnClickListener {
-                if (baseId == 0L) {
+            add.setOnClickListener {
+                if (baseFolderEntity != null) {
+                    if (baseFolderEntity!!.isFolderEnd) {
+                        navigate(
+                            R.id.newItemFragment, bundleOf(
+                                Constants.ARG_TYPE to Type.NEW_DICTIONARY,
+                                Constants.ARG_OBJECT to baseFolderEntity,
+                            )
+                        )
+                    } else {
+                        navigate(
+                            R.id.newItemFragment, bundleOf(
+                                Constants.ARG_TYPE to Type.NEW_FOLDER,
+                                Constants.ARG_OBJECT to baseFolderEntity,
+                            )
+                        )
+                    }
+                } else {
                     navigate(
                         R.id.newItemFragment, bundleOf(
-                            Constants.ARG_TYPE to Type.NULL,
+                            Constants.ARG_TYPE to Type.NEW_FOLDER_BASE_0,
                         )
                     )
-                } else
-                    navigate(
-                        R.id.newItemFragment, bundleOf(
-                            Constants.ARG_TYPE to Type.FOLDER,
-                            Constants.ARG_OBJECT to baseFolderEntity,
-                        )
-                    )
+                }
             }
+            back.setOnClickListener { findNavController().popBackStack() }
         }
     }
 
@@ -109,9 +175,21 @@ class DictionaryFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.getAllFolderByBaseId(baseId).onEach {
-            adapter.submit(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        if (baseFolderEntity == null) {
+            viewModel.getAllFolderByBaseId(baseId).onEach {
+                folderAdapter.submit(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        } else {
+            if (baseFolderEntity!!.isFolderEnd) {
+                viewModel.getAllDictionariesByBaseId(baseId).onEach {
+                    dictionaryAdapter.submit(it)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+            } else {
+                viewModel.getAllFolderByBaseId(baseId).onEach {
+                    folderAdapter.submit(it)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }
+        }
     }
 
     companion object {

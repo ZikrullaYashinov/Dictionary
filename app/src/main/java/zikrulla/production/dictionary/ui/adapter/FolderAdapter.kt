@@ -24,6 +24,8 @@ class FolderAdapter(
                 settings.setOnClickListener {
                     onClickSetting.invoke(folderEntity)
                 }
+                val res = if (folderEntity.isFolderEnd) R.drawable.ic_list else R.drawable.ic_folder
+                folder.setImageResource(res)
             }
         }
     }

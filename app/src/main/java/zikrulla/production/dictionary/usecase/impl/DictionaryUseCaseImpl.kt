@@ -1,6 +1,7 @@
 package zikrulla.production.dictionary.usecase.impl
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import zikrulla.production.dictionary.data.local.entity.DictionaryEntity
 import zikrulla.production.dictionary.data.local.entity.FolderEntity
 import zikrulla.production.dictionary.repository.DictionariesRepository
@@ -20,6 +21,17 @@ class DictionaryUseCaseImpl @Inject constructor(
     }
 
     override fun getAllFolderByBaseId(baseId: Long): Flow<List<FolderEntity>> {
-        return repository.getAllFolderByBaseId(baseId)
+        return repository.getAllFolderByBaseId(baseId).map { folderList ->
+            val list1 = ArrayList<FolderEntity>()
+            val list2 = ArrayList<FolderEntity>()
+            folderList.map {
+                if (it.isFolderEnd)
+                    list2.add(it)
+                else
+                    list1.add(it)
+            }
+            list1.addAll(list2)
+            list1
+        }
     }
 }

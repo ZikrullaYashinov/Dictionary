@@ -18,6 +18,10 @@ class InputDetailsUseCaseImpl @Inject constructor(
         return repository.insertFolder(folderEntity)
     }
 
+    override suspend fun updateFolder(folderEntity: FolderEntity) {
+        repository.updateFolder(folderEntity)
+    }
+
     override fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>> {
         return repository.getAllDictionariesByBaseId(baseId)
     }

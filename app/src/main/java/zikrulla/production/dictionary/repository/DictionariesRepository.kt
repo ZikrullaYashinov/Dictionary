@@ -8,7 +8,11 @@ interface DictionariesRepository {
 
     suspend fun insertDictionaryList(list: List<DictionaryEntity>)
     suspend fun insertDictionary(dictionary: DictionaryEntity)
+    suspend fun updateDictionary(dictionary: DictionaryEntity)
+    suspend fun deleteDictionary(dictionary: DictionaryEntity)
     suspend fun insertFolder(folderEntity: FolderEntity): Long
+    suspend fun updateFolder(folderEntity: FolderEntity)
+    suspend fun deleteFolder(folderEntity: FolderEntity)
     fun getAllFolderByBaseId(baseId: Long): Flow<List<FolderEntity>>
     fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>>
 

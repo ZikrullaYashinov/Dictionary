@@ -1,9 +1,19 @@
 package zikrulla.production.dictionary.data.local.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity("dictionary")
+@Entity("dictionary",
+    foreignKeys = [
+        ForeignKey(
+            entity = FolderEntity::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("baseId"),
+            onDelete = ForeignKey.CASCADE
+        ),
+    ]
+)
 data class DictionaryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,

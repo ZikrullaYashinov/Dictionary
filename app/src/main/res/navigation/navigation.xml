@@ -45,4 +45,14 @@
         android:name="zikrulla.production.dictionary.ui.screen.new_item.NewItemFragment"
         android:label="fragment_new_item"
         tools:layout="@layout/fragment_new_item" />
+    <fragment
+        android:id="@+id/settingsRunFragment"
+        android:name="zikrulla.production.dictionary.ui.screen.settingrun.SettingsRunFragment"
+        android:label="fragment_settings_run"
+        tools:layout="@layout/fragment_settings_run" />
+    <fragment
+        android:id="@+id/gameTestFragment"
+        android:name="zikrulla.production.dictionary.ui.screen.game_test.GameTestFragment"
+        android:label="fragment_game_test"
+        tools:layout="@layout/fragment_game_test" />
 </navigation>

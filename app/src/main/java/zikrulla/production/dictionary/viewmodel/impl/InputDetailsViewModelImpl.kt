@@ -39,6 +39,12 @@ class InputDetailsViewModelImpl @Inject constructor(
         }
     }
 
+    override fun updateFolder(folderEntity: FolderEntity) {
+        viewModelScope.launch {
+            useCase.updateFolder(folderEntity)
+        }
+    }
+
     override fun getAllDictionariesByBaseId(baseId: Long): Flow<List<DictionaryEntity>> {
         return useCase.getAllDictionariesByBaseId(baseId)
     }
