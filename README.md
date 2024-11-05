@@ -1,7 +1,9 @@
-<img src="./screen1.jpg" alt="App Screenshot" width="100" height="222"/>
-<img src="./screen2.jpg" alt="App Screenshot" width="100" height="222"/>
-<img src="./screen3.jpg" alt="App Screenshot" width="100" height="222"/>
-<img src="./screen4.jpg" alt="App Screenshot" width="100" height="222"/>
+<p float="left">
+  <img src="./screen1.jpg" alt="App Screenshot" width="100" height="222"/>
+  <img src="./screen2.jpg" alt="App Screenshot" width="100" height="222"/>
+  <img src="./screen3.jpg" alt="App Screenshot" width="100" height="222"/>
+  <img src="./screen4.jpg" alt="App Screenshot" width="100" height="222"/>
+</p>
 
 # Dictionary
 
