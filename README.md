@@ -1,5 +1,7 @@
-![App Screenshot](./screen1.jpg)
-<img src="./screen1.jpg" alt="App Screenshot" width="300" height="500"/>
+<img src="./screen1.jpg" alt="App Screenshot" width="100" height="222"/>
+<img src="./screen2.jpg" alt="App Screenshot" width="100" height="222"/>
+<img src="./screen3.jpg" alt="App Screenshot" width="100" height="222"/>
+<img src="./screen4.jpg" alt="App Screenshot" width="100" height="222"/>
 
 # Dictionary
 
