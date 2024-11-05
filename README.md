@@ -1,4 +1,5 @@
 ![App Screenshot](./screen1.jpg)
+<img src="./screen1.jpg" alt="App Screenshot" width="300" height="500"/>
 
 # Dictionary
 
