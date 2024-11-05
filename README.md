@@ -1,3 +1,5 @@
+![App Screenshot](./screen1.png)
+
 # Dictionary
 
 "Dictionary" is an application for [memorizing vocabulary].
