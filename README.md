@@ -1,4 +1,4 @@
-![App Screenshot](./screen1.png)
+![App Screenshot](./screen1.jpg)
 
 # Dictionary
 
